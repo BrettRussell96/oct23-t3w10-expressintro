@@ -1,0 +1,17 @@
+{
+  "name": "oct23-t3w10-expressintro",
+  "version": "1.0.0",
+  "description": "ExpressJS content for tuesday and thursday lesson of T3W10",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.3"
+  }
+}
