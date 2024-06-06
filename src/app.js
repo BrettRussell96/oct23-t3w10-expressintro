@@ -2,6 +2,7 @@
 
 const express = require('express');
 const serverInstance = express();
+const {body, validationResult} = require("express-validator");
 
 // Raw JSON in body allowed
 serverInstance.use(express.json());
@@ -27,13 +28,24 @@ serverInstance.get("/", (request, response) => {
      });
 });
 
-serverInstance.post("/", (request, response) =>{
+serverInstance.post(
+    "/", // path
+    body("username").notEmpty().isLength({min: 4, max: 10}), // middleware in route chain
+    (request, response) => { // final stop in route chain
+        
+        const errors = validationResult(request);
+        if (!errors.isEmpty()){
+            response.status(400).json({
+                message: "Bad username",
+                errors: errors.array()
+            });
+        }
 
-    console.log(request.body);
+        console.log(request.body);
 
-    response.json({
-        message: "Recieved data:",
-        requestData: request.body
+        response.json({
+            message: "Recieved data:",
+            requestData: request.body
     })
 });
 
