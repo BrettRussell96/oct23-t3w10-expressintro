@@ -1,21 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
+const {readAuthData, verifyAuthData, exampleAsyncMiddleware} = require("../middleware/authentication");
+
+router.use(readAuthData);
+
 router.get("/", (request, response) => {
 	response.json({message:"Router route activated!"});
 });
 
 
-router.get("/random", (request, response) => {
-    let queryParams = request.query;
-	response.json({
-        message:"Random Pokemon route activated!",
-        queryParams: queryParams
-    })
-});
-
-
-router.get("/getbyid/:pokemonNumber", (request, response) => {
+router.get("/getbyid/:pokemonNumber", exampleAsyncMiddleware, verifyAuthData, (request, response) => {
 
     let retrievedNumberFromUrl = request.params.pokemonNumber;
 
@@ -23,6 +18,17 @@ router.get("/getbyid/:pokemonNumber", (request, response) => {
         number: retrievedNumberFromUrl
     });
 });
+
+
+router.get("/random", (request, response) => {
+    console.log("random route");
+    let queryParams = request.query;
+	response.json({
+        message:"Random Pokemon route activated!",
+        queryParams: queryParams
+    })
+});
+
 
 
 router.post("/", (request, response) => {

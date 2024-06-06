@@ -1,7 +1,6 @@
 // Declare and configure the server
 
 const express = require('express');
-const PokemonRouter = require("./routers/pokemonRoutes");
 const serverInstance = express();
 
 // Raw JSON in body allowed
@@ -16,6 +15,7 @@ serverInstance.use(verifyAuthData);
 
 
 // Every route that begins with /pokemon gets passed to PokemonRouter
+const PokemonRouter = require("./routers/pokemonRoutes");
 serverInstance.use("/pokemon", PokemonRouter);
 
 
@@ -35,7 +35,19 @@ serverInstance.post("/", (request, response) =>{
         message: "Recieved data:",
         requestData: request.body
     })
-})
+});
+
+serverInstance.put("/", (request, response) => {
+	response.json({message:"Put request received"})
+});
+
+serverInstance.patch("/", (request, response) => {
+	response.json({message:"Patch request received"})
+});
+
+serverInstance.delete("/", (request, response) => {
+	response.json({message:"Delete request received"})
+});
 
 // Make the instance available for other files to use
 module.exports = serverInstance;
